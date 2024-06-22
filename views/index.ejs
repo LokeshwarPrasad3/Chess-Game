@@ -3,9 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chess Page</title>
+    <title>Play Online Chess • Lokeshwar Dewangan</title>
+    <meta
+      name="description"
+      content="Play chess online with friends or against the computer. Enjoy real-time gameplay, move validation, and responsive design using Socket.IO for live interactions, created by Lokeshwar Dewangan."
+    />
+    <meta
+      name="keywords"
+      content="online chess game, play chess online, multiplayer chess, chess game with socket.io, real-time chess game, Lokeshwar Dewangan"
+    />
     <link rel="stylesheet" href="/styles/tailwind.css" />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Playwrite+PL:wght@100..400&display=swap"
       rel="stylesheet"
@@ -68,15 +75,56 @@
     </style>
   </head>
   <body class="bg-slate-800 text-white">
+    <!-- Modal notice -->
+    <div
+      id="modalNoticeBackdrop"
+      class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 justify-center items-center z-50 hidden"
+    >
+      <!-- Modal content -->
+      <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <!-- Modal header -->
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-800">Notice</h2>
+          <!-- Close button -->
+          <button
+            id="closeModalNoticeBtn"
+            class="text-gray-400 hover:text-gray-600 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <p class="text-gray-600">
+          Drag-and-drop features may not work on mobile devices. Optimized for
+          desktops & laptops. For best results, use a PC or laptop. Mobile
+          compatibility coming soon.
+        </p>
+      </div>
+    </div>
+
+    <!-- chess content body -->
     <div class="chess_container flex flex-col items-center justify-center">
       <h1 class="text-3xl font-overpass mt-20 font-semibold"><%= title %></h1>
       <div
-        class="container flex w-full justify-center items-center flex-col mt-20"
+        class="container flex w-full justify-center items-center flex-col mt-16"
       >
         <p class="text-xl font-overpass">
           Turn of <span id="turnValue"></span>
         </p>
-        <div class="chessboard mt-4 w-96 h-96 bg-red-800"></div>
+        <div class="chessboard mt-4 w-96 h-96 "></div>
       </div>
     </div>
 

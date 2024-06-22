@@ -128,3 +128,48 @@ socket.on("move", function (move) {
 
 
 renderBoard();
+// modal notice scripts
+document.addEventListener("DOMContentLoaded", function () {
+    // Function to detect if the device is a PC or laptop
+    function isMobile() {
+        return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+    }
+
+    // Show modal notice only if on a mobile device
+    if (isMobile()) {
+        // Select modal and close button
+        const modal = document.getElementById('modalNoticeBackdrop');
+        const closeModalBtn = document.getElementById('closeModalNoticeBtn');
+
+        // Show modal when page loads
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // Close modal function
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Close modal on close button click
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Close modal on outside click (optional)
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key press (optional)
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    } else {
+        // Show modal when page loads
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+
+    }
+});
