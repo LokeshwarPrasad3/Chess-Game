@@ -4,8 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "build:css": "postcss src/styles.css -o public/styles/tailwind.css",
+    "dev": "concurrently \"npm run dev:server\" \"npm run watch:css\" \"npm run browser-sync\"",
+    "dev:server": "nodemon --ext js,ejs app.js",
+    "watch:css": "postcss src/styles.css -o public/styles/tailwind.css --watch",
+    "browser-sync": "browser-sync start --proxy http://localhost:3000 --files 'public/styles/*.css, views/**/*.ejs, public/scripts/*.js'"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +18,12 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.4"
   }
 }
