@@ -18,7 +18,7 @@ const renderBoard = () => {
     board.forEach((row, rowIndex) => {
         // console.log(row, rowIndex);
         row.forEach((square, squareIndex) => {
-            console.log(square, squareIndex)
+            // console.log(square, squareIndex)
             const squareElement = document.createElement("div");
             squareElement.classList.add("square",
                 (rowIndex + squareIndex) % 2 === 0 ? "light" : "dark"

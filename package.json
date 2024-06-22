@@ -5,11 +5,10 @@
   "main": "app.js",
   "scripts": {
     "build:css": "postcss src/styles.css -o public/styles/tailwind.css",
-    "dev": "concurrently \"npm run dev:server\" \"npm run watch:css\" \"npm run browser-sync\"",
+    "start": "node app.js",
+    "dev": "concurrently \"npm run dev:server\" \"npm run watch:css\" ",
     "dev:server": "nodemon --ext js,ejs app.js",
-    "watch:css": "postcss src/styles.css -o public/styles/tailwind.css --watch",
-    "browser-sync": "browser-sync start --proxy http://localhost:3000 --files 'public/styles/*.css, views/**/*.ejs, public/scripts/*.js'",
-    "start": "nodemon index.js"
+    "watch:css": "postcss src/styles.css -o public/styles/tailwind.css --watch"
   },
   "keywords": [],
   "author": "",
