@@ -28,7 +28,52 @@ app.get("/", (req, res) => {
 
 // socket related
 io.on("connection", (uniqueSocket) => { // socket has uniuqe code
-    console.log(`Connected on ${uniqueSocket.id}`)
+    console.log(`Socket connected on ${uniqueSocket.id}`);
+    // id is each time unique
+
+    if (!players.white) {
+        players.white = uniqueSocket.id;
+        // sent to every another user that one is connected 
+        uniqueSocket.emit("playerRole", "w");
+    } else if (!players.black) {
+        players.black = uniqueSocket.id;
+        uniqueSocket.emit("playerRole", "b");
+    } else {
+        uniqueSocket.emit("spectatorRole");
+    }
+
+    uniqueSocket.on("disconnect", () => {
+        if (uniqueSocket.id === players.white) {
+            delete players.white;
+        } else if (uniqueSocket.id === players.black) {
+            delete players.black;
+        }
+    })
+
+    uniqueSocket.on("move", (move) => {
+        try {
+            // if not valid move then simply return
+            if (chess.turn() == "w" && uniqueSocket.id !== players.white) return;
+            if (chess.turn() == "w" && uniqueSocket.id !== players.black) return;
+
+            const result = chess.move(move);
+            if (result) {
+                currentPlayer = chess.turn(); // chess automatically change turn
+                io.emit("move", move); // broadcast what move to all
+                // send new state of board
+                io.emit("boardState", chess.fen()) // long equation that show state board of all elements
+            } else {
+                console.log(`Invalid move : ${move}`);
+                uniqueSocket.emit("invalidMove", move)
+
+            }
+
+        } catch (error) {
+            console.log(`Invalid Move Error ${error}`);
+            uniqueSocket.emit(`Invalid move ${move}`)
+        }
+    })
+
 })
 
 

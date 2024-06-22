@@ -1,0 +1,46 @@
+Chess:
+  description: "Chess is a two-player strategy board game played on an 8x8 grid."
+  components:
+    - board: "8x8 grid with alternating light and dark squares"
+    - pieces:
+        - "King"
+        - "Queen"
+        - "Rook"
+        - "Bishop"
+        - "Knight"
+        - "Pawn"
+  objective: "Checkmate the opponent's king"
+  piece_movement:
+    King: "One square in any direction"
+    Queen: "Any number of squares in any direction"
+    Rook: "Any number of squares horizontally or vertically"
+    Bishop: "Any number of squares diagonally"
+    Knight: "In an L-shape: two squares in one direction, then one square perpendicular"
+    Pawn: 
+      - "One square forward"
+      - "Two squares forward on its first move"
+      - "Captures one square diagonally"
+  special_rules:
+    - castling: "A special move involving the king and a rook"
+    - en_passant: "A special pawn capture"
+    - promotion: "A pawn reaching the far end of the board can be promoted to any other piece, usually a queen"
+  starting_position: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
+Developer_Notes:
+  library: "chess.js"
+  description: "A JavaScript library for chess game mechanics."
+  features:
+    - "Validate and execute moves"
+    - "Generate legal moves"
+    - "Check for check and checkmate"
+    - "Support for Forsyth-Edwards Notation (FEN) and Portable Game Notation (PGN)"
+  usage:
+    - install: "npm install chess.js"
+    - example:
+        code: |
+          const Chess = require('chess.js').Chess;
+          const chess = new Chess();
+
+          chess.move('e4');
+          console.log(chess.fen()); # Output the FEN string
+    - documentation: "https://github.com/jhlywa/chess.js/blob/master/README.md"

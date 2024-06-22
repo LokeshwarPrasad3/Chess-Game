@@ -8,7 +8,8 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run watch:css\" \"npm run browser-sync\"",
     "dev:server": "nodemon --ext js,ejs app.js",
     "watch:css": "postcss src/styles.css -o public/styles/tailwind.css --watch",
-    "browser-sync": "browser-sync start --proxy http://localhost:3000 --files 'public/styles/*.css, views/**/*.ejs, public/scripts/*.js'"
+    "browser-sync": "browser-sync start --proxy http://localhost:3000 --files 'public/styles/*.css, views/**/*.ejs, public/scripts/*.js'",
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
