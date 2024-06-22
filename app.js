@@ -14,7 +14,7 @@ const io = socket(server);
 const chess = new Chess();
 // define some variables
 let players = {};
-let currentPlayer = 'W';
+let currentPlayer = 'w';
 
 
 // set ejs
@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 
 app.get("/", (req, res) => {
-    res.render("index", { title: "Custom Chess Game" });
+    res.render("index", { title: "Own Chess Game" });
 })
 
 
@@ -55,7 +55,7 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
         try {
             // if not valid move then simply return
             if (chess.turn() == "w" && uniqueSocket.id !== players.white) return;
-            if (chess.turn() == "w" && uniqueSocket.id !== players.black) return;
+            if (chess.turn() == "b" && uniqueSocket.id !== players.black) return;
 
             const result = chess.move(move);
             if (result) {
@@ -63,11 +63,13 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
                 io.emit("move", move); // broadcast what move to all
                 // send new state of board
                 io.emit("boardState", chess.fen()) // long equation that show state board of all elements
+                console.log("successfully moved");
             } else {
                 console.log(`Invalid move : ${move}`);
                 uniqueSocket.emit("invalidMove", move)
 
             }
+
 
         } catch (error) {
             console.log(`Invalid Move Error ${error}`);
