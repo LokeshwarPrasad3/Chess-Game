@@ -77,6 +77,15 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
         }
     })
 
+    // print your turn for who have turn
+    uniqueSocket.on("whoTurn", (turnerName) => {
+        if (turnerName === chess.turn()) {
+            uniqueSocket.emit("getTurn", "Your Turn");
+        } else {
+            uniqueSocket.emit("getTurn", "");
+        }
+    })
+
 })
 
 

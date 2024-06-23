@@ -63,12 +63,12 @@ const renderBoard = () => {
         })
     })
 
-    turnElement.innerHTML = chess.turn() === "b" ? "Black" : "White";
     if (playerRole === "b") {
         boardElement.classList.add("flipped");
     } else {
         boardElement.classList.remove("flipped");
     }
+    whoTakeTurnNow(playerRole);
 }
 
 const handleMove = (source, target) => {
@@ -104,6 +104,12 @@ const getPieceUnicode = (piece) => {
     return unicodePieces[piece.type] || "";
 }
 
+const whoTakeTurnNow = (turnerName) => {
+    socket.emit("whoTurn", turnerName);
+    console.log("actual turner ", turnerName, chess.turn())
+
+}
+
 
 socket.on("playerRole", function (role) {
     playerRole = role;
@@ -125,9 +131,14 @@ socket.on("move", function (move) {
     renderBoard();
 })
 
+socket.on("getTurn", function (instruction) {
+    turnElement.innerHTML = instruction;
+
+})
 
 
 renderBoard();
+
 // modal notice scripts
 document.addEventListener("DOMContentLoaded", function () {
     // Function to detect if the device is a PC or laptop
