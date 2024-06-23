@@ -75,6 +75,22 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
                 // send new state of board
                 io.emit("boardState", chess.fen()) // long equation that show state board of all elements
                 console.log("successfully moved");
+
+                // Check for game-over conditions
+                if (chess.isCheckmate()) {
+                    io.emit("checkmate", "Checkmate! " + currentPlayer + " wins!");
+                    console.log("Game Check and Mate!!");
+                } else if (chess.isDraw()) {
+                    io.emit("gameOver", "Draw!");
+                    console.log("Game Draw!!");
+                } else if (chess.isGameOver()) {
+                    io.emit("gameOver", "Game Over! " + currentPlayer + " wins!");
+                    console.log("Game Over!!");
+                }
+
+
+                console.log("checkout", chess.isCheckmate(), chess.isDraw(), chess.isGameOver())
+
             } else {
                 console.log(`Invalid move : ${move}`);
                 uniqueSocket.emit("invalidMove", move)
@@ -84,7 +100,7 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
 
         } catch (error) {
             console.log(`Invalid Move Error ${error}`);
-            uniqueSocket.emit(`Invalid move ${move}`)
+            uniqueSocket.emit("invalidMove", move);
         }
     })
 

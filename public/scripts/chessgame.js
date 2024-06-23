@@ -12,6 +12,10 @@ let draggedPiece = null;
 let sourceSquare = null;
 let playerRole = null;
 
+const piceMoveAudio = new Audio("../audio/move_piece.mp3");
+const checkMateAudio = new Audio("../audio/checkmate.wav");
+const gameOverAudio = new Audio("../audio/game-over.mp3");
+const gameWonAudio = new Audio("../audio/game_won.mp3");
 
 const renderBoard = () => {
     const board = chess.board();
@@ -150,7 +154,10 @@ socket.on("boardState", function (fen) {
 
 socket.on("move", function (move) {
     chess.move(move);
+    piceMoveAudio.play();
     renderBoard();
+    console.log(chess.fen())
+    console.log("checkout", chess.isCheckmate(), chess.isDraw(), chess.isGameOver())
 })
 
 // which player have turn shows
@@ -169,6 +176,23 @@ socket.on("opponentNotConnected", (instruction) => {
     statusConnectionElement.innerHTML = instruction;
 })
 
+// handle if game is check mate
+socket.on("checkmate", (instruction) => {
+    turnElement.innerHTML = instruction;
+    console.log("checkmate", instruction);
+    checkMateAudio.play();
+})
+
+socket.on('gameOver', (message) => {
+    turnElement.innerHTML = message;
+    console.log("game over", message);
+    gameOverAudio.play();
+});
+
+
+socket.on('invalidMove', (move) => {
+    console.log("invalid ", move)
+});
 
 renderBoard();
 
