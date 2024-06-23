@@ -4,6 +4,8 @@ const chess = new Chess();
 
 const boardElement = document.querySelector(".chessboard");
 const turnElement = document.getElementById("turnValue");
+const showConnectedElement = document.getElementById("showConnected");
+const statusConnectionElement = document.getElementById("statusConnection");
 
 // global variables
 let draggedPiece = null;
@@ -131,7 +133,6 @@ const whoTakeTurnNow = (turnerName) => {
 
 }
 
-
 socket.on("playerRole", function (role) {
     playerRole = role;
     renderBoard();
@@ -152,9 +153,20 @@ socket.on("move", function (move) {
     renderBoard();
 })
 
+// which player have turn shows
 socket.on("getTurn", function (instruction) {
     turnElement.innerHTML = instruction;
 
+})
+
+// show connected and live
+socket.on("connectedPlayers", (instruction) => {
+    showConnectedElement.innerHTML = instruction;
+})
+
+// opponenet disconnected in playing time
+socket.on("opponentNotConnected", (instruction) => {
+    statusConnectionElement.innerHTML = instruction;
 })
 
 

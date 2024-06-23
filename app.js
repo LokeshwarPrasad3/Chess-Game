@@ -43,12 +43,23 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
         uniqueSocket.emit("spectatorRole");
     }
 
+    // need to show that opponent is not connected
+    if (players.white && !players.black) {
+        io.to(players.white).emit("opponentNotConnected", "Waiting for oponent to connect...");
+        io.emit("connectedPlayers", "");
+    } else if (players.white && players.black) {
+        io.emit("connectedPlayers", "Connected 🔴 Live");
+        io.to(players.white).emit("opponentNotConnected", "");
+    }
+
     uniqueSocket.on("disconnect", () => {
         if (uniqueSocket.id === players.white) {
             delete players.white;
         } else if (uniqueSocket.id === players.black) {
             delete players.black;
         }
+        io.emit("connectedPlayers", "");
+        io.emit("opponentNotConnected", "Opponent Disconnected...")
     })
 
     uniqueSocket.on("move", (move) => {
@@ -82,9 +93,10 @@ io.on("connection", (uniqueSocket) => { // socket has uniuqe code
         if (turnerName === chess.turn()) {
             uniqueSocket.emit("getTurn", "Your Turn");
         } else {
-            uniqueSocket.emit("getTurn", "");
+            uniqueSocket.emit("getTurn", "Opponent Turn");
         }
     })
+
 
 })
 

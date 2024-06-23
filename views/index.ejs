@@ -72,6 +72,25 @@
       .flipped .piece {
         transform: rotate(180deg);
       }
+
+      /* Live connected animation */
+      @keyframes pulseFontSize {
+        0% {
+          font-size: 0.85rem;
+        }
+        50% {
+          font-size: 0.92rem;
+        }
+        100% {
+          font-size: 0.85rem;
+        }
+      }
+
+      #showConnected {
+        animation: pulseFontSize 3s linear infinite;
+        transition: font-size 3s ease-in;
+        font-size: 0.85rem; /* Initial font size should match the keyframes */
+      }
     </style>
   </head>
   <body class="bg-slate-800 text-white">
@@ -118,9 +137,15 @@
     <!-- chess content body -->
     <div class="chess_container flex flex-col items-center justify-center">
       <h1 class="text-3xl font-overpass mt-20 font-semibold"><%= title %></h1>
+      <p class="h-7 font-overpass">
+        <span id="showConnected"></span>
+      </p>
       <div
-        class="container flex w-full justify-center items-center flex-col mt-16"
+        class="container flex w-full justify-center items-center flex-col mt-10"
       >
+        <p class="text-xl h-7 font-overpass">
+          <span id="statusConnection"></span>
+        </p>
         <p class="text-xl h-7 font-overpass">
           <span id="turnValue"></span>
         </p>
