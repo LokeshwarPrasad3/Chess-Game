@@ -88,7 +88,7 @@ const handleMove = (source, target) => {
 }
 
 const getPieceUnicode = (piece) => {
-    console.log("Pieces ", piece)
+    // console.log("Pieces ", piece)
     // const unicodePieces = {
     //     p: "\u2659", // White pawn
     //     r: "\u2656", // White rook
@@ -129,7 +129,7 @@ const getPieceUnicode = (piece) => {
 
 const whoTakeTurnNow = (turnerName) => {
     socket.emit("whoTurn", turnerName);
-    console.log("actual turner ", turnerName, chess.turn())
+    // console.log("actual turner ", turnerName, chess.turn())
 
 }
 
