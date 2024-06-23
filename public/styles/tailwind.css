@@ -570,26 +570,14 @@ video {
 .h-6 {
   height: 1.5rem;
 }
-.h-96 {
-  height: 24rem;
-}
-.h-\[28px\] {
-  height: 28px;
-}
-.h-full {
-  height: 100%;
-}
-.h-4 {
-  height: 1rem;
-}
-.h-8 {
-  height: 2rem;
-}
 .h-7 {
   height: 1.75rem;
 }
-.min-h-\[28px\] {
-  min-height: 28px;
+.h-96 {
+  height: 24rem;
+}
+.h-full {
+  height: 100%;
 }
 .w-6 {
   width: 1.5rem;

@@ -31,7 +31,12 @@ const renderBoard = () => {
             if (square) {
                 const pieceElement = document.createElement("div");
                 pieceElement.classList.add("piece", square.color === 'w' ? 'white' : 'black');
-                pieceElement.innerText = getPieceUnicode(square);
+                // pieceElement.innerText = getPieceUnicode(square);
+                const updatedSquare = { // solve image problem
+                    type: `${square.color === "b" ? square.type.toUpperCase() : square.type}`,
+                    color: square.color
+                }
+                pieceElement.innerHTML = getPieceUnicode(updatedSquare);
                 pieceElement.draggable = playerRole === square.color;
                 pieceElement.addEventListener("dragstart", (event) => {
                     if (pieceElement.draggable) {
@@ -81,24 +86,40 @@ const handleMove = (source, target) => {
 }
 
 const getPieceUnicode = (piece) => {
-    const unicodePieces = {
-        p: "\u2659", // White pawn
-        r: "\u2656", // White rook
-        n: "\u2658", // White knight
-        b: "\u2657", // White bishop
-        q: "\u2655", // White queen
-        k: "\u2654", // White king
-        P: "\u265F", // Black pawn
-        R: "\u265C", // Black rook
-        N: "\u265E", // Black knight
-        B: "\u265D", // Black bishop
-        Q: "\u265B", // Black queen
-        K: "\u265A"  // Black king
-    };
+    console.log("Pieces ", piece)
+    // const unicodePieces = {
+    //     p: "\u2659", // White pawn
+    //     r: "\u2656", // White rook
+    //     n: "\u2658", // White knight
+    //     b: "\u2657", // White bishop
+    //     q: "\u2655", // White queen
+    //     k: "\u2654", // White king
+    //     P: "\u265F", // Black pawn
+    //     R: "\u265C", // Black rook
+    //     N: "\u265E", // Black knight
+    //     B: "\u265D", // Black bishop
+    //     Q: "\u265B", // Black queen
+    //     K: "\u265A"  // Black king
+    // };
 
 
     // const unicodePieces = {p: "♙",r: "♖",n: "♘", b: "♗",q: "♕", k: "♔", P: "♟",R: "♜",N: "♞",B: "♝",Q: "♛",K: "♚",    }
 
+
+    const unicodePieces = {
+        p: `<img src=${"/images/white_pawn.png"} />`, // White pawn
+        r: `<img src=${"/images/white_rook.png"} />`, // White rook
+        n: `<img src=${"/images/white_knight.png"} />`, // White knight
+        b: `<img src=${"/images/white_bishop.png"} />`, // White bishop
+        q: `<img src=${"/images/white_queen.png"} />`, // White queen
+        k: `<img src=${"/images/white_king.png"} />`, // White king
+        P: `<img src=${"/images/black_pawn.png"} />`, // Black pawn
+        R: `<img src=${"/images/black_rook.png"} />`, // Black rook
+        N: `<img src=${"/images/black_knight.png"} />`, // Black knight
+        B: `<img src=${"/images/black_bishop.png"} />`, // Black bishop
+        Q: `<img src=${"/images/black_queen.png"} />`, // Black queen
+        K: `<img src=${"/images/black_king.png"} />`  // Black king
+    };
 
 
     return unicodePieces[piece.type] || "";
@@ -178,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     } else {
+        const modal = document.getElementById('modalNoticeBackdrop');
         // Show modal when page loads
         modal.classList.remove('flex');
         modal.classList.add('hidden');
